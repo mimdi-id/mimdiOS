@@ -17,40 +17,49 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Menggunakan font Inter sebagai default */
         body {
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Style untuk scrollbar agar lebih modern */
-        ::-webkit-scrollbar {
-            width: 8px;
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+        .modal-backdrop { background-color: rgba(0,0,0,0.5); }
+
+        /* Transisi untuk sidebar dan konten utama */
+        #sidebar, #mainContent {
+            transition: all 0.3s ease-in-out;
         }
-        ::-webkit-scrollbar-track {
-            background: #e2e8f0; /* light gray track */
+        
+        /* Style untuk sidebar yang diciutkan */
+        #adminPage.sidebar-collapsed #sidebar {
+            width: 80px;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #4f46e5; /* indigo thumb */
-            border-radius: 10px;
+        #adminPage.sidebar-collapsed #mainContent {
+            margin-left: 80px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1; /* lighter indigo on hover */
+        #adminPage.sidebar-collapsed .sidebar-text {
+            display: none;
         }
-        .modal-backdrop {
-            background-color: rgba(0,0,0,0.5);
+        #adminPage.sidebar-collapsed .sidebar-logo-text {
+             display: none;
+        }
+        #adminPage.sidebar-collapsed .sidebar-link {
+            justify-content: center;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen">
 
     <!-- Container Utama Aplikasi -->
-    <div id="app" class="p-4 md:p-8">
+    <div id="app">
 
         <!-- ================================== -->
         <!--        HALAMAN LANDING PAGE        -->
         <!-- ================================== -->
-        <section id="landingPage" class="flex flex-col items-center justify-center min-h-[80vh] text-center">
+        <section id="landingPage" class="p-4 md:p-8 flex flex-col items-center justify-center min-h-screen text-center">
             <div class="max-w-3xl mx-auto">
                 <div class="flex items-center justify-center gap-4 mb-6">
                     <div class="p-3 bg-indigo-100 rounded-xl">
@@ -73,7 +82,7 @@
         <!-- ================================== -->
         <!--           HALAMAN LOGIN            -->
         <!-- ================================== -->
-        <section id="loginPage" class="hidden min-h-[80vh] flex items-center justify-center">
+        <section id="loginPage" class="hidden min-h-screen flex items-center justify-center p-4">
             <div class="w-full max-w-md p-8 space-y-6 bg-white/70 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-200">
                 <div class="text-center">
                     <div class="flex items-center justify-center gap-3 mb-4">
@@ -114,50 +123,57 @@
         <!-- ================================== -->
         <!--           HALAMAN ADMIN            -->
         <!-- ================================== -->
-        <section id="adminPage" class="hidden">
-            <!-- Header Admin -->
-            <header class="flex flex-wrap justify-between items-center gap-4 mb-8">
-                <div class="flex items-center gap-3">
-                    <div class="p-2 bg-indigo-100 rounded-lg">
-                        <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-600"></i>
+        <section id="adminPage" class="hidden md:flex">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 h-screen flex flex-col fixed top-0 left-0">
+                <div class="flex items-center justify-between p-4 border-b h-16">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-indigo-100 rounded-lg">
+                           <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <span class="sidebar-logo-text text-xl font-bold text-gray-800">Mimdi App</span>
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-900">Dasbor Admin</h1>
+                    <button id="hamburgerBtn" class="hidden md:block p-2 rounded-md hover:bg-gray-100">
+                        <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
+                    </button>
                 </div>
-                <button id="logoutBtn" class="flex items-center gap-2 text-sm bg-red-100 hover:bg-red-200 text-red-600 font-medium py-2 px-4 rounded-lg transition-colors">
-                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                    Logout
-                </button>
-            </header>
+                <nav id="sidebarNav" class="flex-grow p-4 space-y-2">
+                    <!-- Menu akan di-generate oleh JavaScript -->
+                </nav>
+                 <div class="p-4 border-t">
+                    <button id="logoutBtn" class="sidebar-link w-full flex items-center gap-3 text-sm bg-red-100 hover:bg-red-200 text-red-600 font-medium py-2 px-4 rounded-lg transition-colors">
+                        <i data-lucide="log-out" class="w-5 h-5"></i>
+                        <span class="sidebar-text">Logout</span>
+                    </button>
+                </div>
+            </aside>
 
-            <!-- Konten Utama Admin -->
-            <main>
-                <div class="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-4 md:p-6 shadow-lg">
-                    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
-                        <div class="flex-grow">
-                             <h2 class="text-xl font-semibold text-gray-900">Daftar Pesanan</h2>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button id="refreshDataBtn" class="flex items-center gap-2 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-600 font-medium py-2 px-4 rounded-lg transition-colors">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">Muat Ulang</span>
-                            </button>
-                             <button id="addOrderBtn" class="flex items-center gap-2 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors shadow-md shadow-indigo-500/20">
-                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                                <span class="hidden sm:inline">Tambah</span>
-                            </button>
-                        </div>
+            <!-- Konten Utama -->
+            <main id="mainContent" class="flex-grow md:ml-64 p-4 md:p-8">
+                 <header class="flex flex-wrap justify-between items-center gap-4 mb-8">
+                    <h1 id="contentTitle" class="text-2xl font-bold text-gray-900">
+                        <!-- Judul konten dinamis -->
+                    </h1>
+                     <div class="flex items-center gap-2">
+                        <button id="refreshDataBtn" class="flex items-center gap-2 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-600 font-medium py-2 px-4 rounded-lg transition-colors">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Muat Ulang</span>
+                        </button>
+                         <button id="addDataBtn" class="flex items-center gap-2 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors shadow-md shadow-indigo-500/20">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Tambah</span>
+                        </button>
                     </div>
-                   
-                    <!-- Container untuk tabel data dinamis -->
+                </header>
+
+                <div class="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-4 md:p-6 shadow-lg">
                     <div id="dataContainer">
-                        <!-- Indikator loading -->
                         <div id="loadingIndicator" class="text-center p-8">
                             <p class="flex items-center justify-center gap-2 text-gray-500">
                                 <i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>
-                                Memuat data pesanan...
+                                Memuat data...
                             </p>
                         </div>
-                        <!-- Data (kartu/tabel) akan di-render di sini oleh JavaScript -->
                     </div>
                 </div>
             </main>
@@ -166,60 +182,23 @@
     </div>
     
     <!-- ================================== -->
-    <!--         MODAL UNTUK CRUD           -->
+    <!--     MODAL GENERIC UNTUK CRUD       -->
     <!-- ================================== -->
     <div id="crudModal" class="fixed inset-0 z-50 items-center justify-center hidden p-4 modal-backdrop">
         <div class="relative w-full max-w-2xl mx-auto mt-10">
             <div class="relative bg-white rounded-lg shadow-xl">
-                <!-- Modal header -->
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
-                    <h3 id="modalTitle" class="text-xl font-semibold text-gray-900">
-                        <!-- Judul akan diisi oleh JS -->
-                    </h3>
+                    <h3 id="modalTitle" class="text-xl font-semibold text-gray-900"></h3>
                     <button type="button" id="closeModalBtn" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
                         <i data-lucide="x" class="w-5 h-5"></i>
-                        <span class="sr-only">Close modal</span>
                     </button>
                 </div>
-                <!-- Modal body -->
                 <div class="p-6">
-                    <form id="crudForm" class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        <input type="hidden" id="originalIDOrder" name="originalIDOrder">
-                        <div>
-                            <label for="IDOrder" class="block mb-2 text-sm font-medium text-gray-700">IDOrder</label>
-                            <input type="text" name="IDOrder" id="IDOrder" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="ORD-001" required>
-                        </div>
-                        <div>
-                            <label for="Nama" class="block mb-2 text-sm font-medium text-gray-700">Nama</label>
-                            <input type="text" name="Nama" id="Nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Nama Pelanggan" required>
-                        </div>
-                        <div>
-                            <label for="Jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
-                            <input type="text" name="Jenis" id="Jenis" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Produk/Layanan">
-                        </div>
-                        <div>
-                            <label for="Jumlah" class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
-                            <input type="number" name="Jumlah" id="Jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="0">
-                        </div>
-                         <div>
-                            <label for="Satuan" class="block mb-2 text-sm font-medium text-gray-700">Satuan</label>
-                            <input type="text" name="Satuan" id="Satuan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="pcs, kg, box">
-                        </div>
-                         <div>
-                            <label for="Total" class="block mb-2 text-sm font-medium text-gray-700">Total</label>
-                            <input type="number" name="Total" id="Total" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="250000">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label for="Catatan" class="block mb-2 text-sm font-medium text-gray-700">Catatan</label>
-                            <textarea id="Catatan" name="Catatan" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Catatan tambahan..."></textarea>
-                        </div>
-                    </form>
+                    <!-- Form akan dibuat dinamis oleh JS di sini -->
+                    <form id="crudForm" class="grid grid-cols-1 gap-6 md:grid-cols-2"></form>
                 </div>
-                <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                    <button id="formSubmitBtn" type="submit" form="crudForm" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                        <!-- Teks Tombol oleh JS -->
-                    </button>
+                    <button id="formSubmitBtn" type="submit" form="crudForm" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"></button>
                     <button id="cancelModalBtn" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Batal</button>
                 </div>
             </div>
@@ -234,7 +213,6 @@
             <div class="relative bg-white rounded-lg shadow-xl">
                 <button id="closeDeleteModalBtn" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
                     <i data-lucide="x" class="w-5 h-5"></i>
-                    <span class="sr-only">Close modal</span>
                 </button>
                 <div class="p-6 text-center">
                     <i data-lucide="alert-circle" class="mx-auto mb-4 text-red-500 w-14 h-14"></i>
