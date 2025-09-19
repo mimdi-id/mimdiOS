@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             card.innerHTML = `
                 <div class="relative">
-                    <img src="${imageUrl}" alt="${rowData[config.descriptionColumn]}" class="w-full h-48 object-cover cursor-pointer" onclick="window.app.showImagePreview('${imageUrl}')">
+                    <img src="${imageUrl}" alt="${rowData[config.descriptionColumn]}" class="w-full h-48 object-cover cursor-pointer" onclick="window.app.showImagePreview('${rowData['Foto']}')">
                     <div class="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                          <button onclick="window.app.openModalForEdit('${itemId}')" class="bg-white/80 dark:bg-gray-800/80 p-2 rounded-full text-indigo-600 hover:bg-indigo-100"><i data-lucide="edit" class="w-4 h-4"></i></button>
                          <button onclick="window.app.showDeleteConfirm('${itemId}')" class="bg-white/80 dark:bg-gray-800/80 p-2 rounded-full text-red-600 hover:bg-red-100"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
@@ -532,8 +532,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const match = url.match(/file\/d\/([a-zA-Z0-9_-]+)/);
         if (match && match[1]) {
-            // Remove thumbnail parameter to get full size image
-            return `https://drive.google.com/uc?id=${match[1]}`;
+            // Menggunakan thumbnail dengan lebar 1080px
+            return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1080`;
         }
         return url;
     };
