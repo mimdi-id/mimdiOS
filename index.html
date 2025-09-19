@@ -1,351 +1,321 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mimdi App (Vanilla JS)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mimdi App - Manajemen Bisnis</title>
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Menambahkan font Inter dari Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        /* Menggunakan font Inter sebagai default */
         body {
             font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        /* Menyembunyikan halaman yang tidak aktif */
-        .page {
-            display: none;
+        /* Style untuk scrollbar agar lebih modern */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        /* Style untuk loader icon agar berputar */
-        .animate-spin {
-            animation: spin 1s linear infinite;
+        ::-webkit-scrollbar-track {
+            background: #111827;
         }
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white font-sans">
+<body class="bg-gray-900 text-gray-200 bg-gradient-to-br from-gray-900 via-black to-gray-800 min-h-screen">
 
-    <!-- Container untuk setiap halaman -->
-    <div id="landingPage" class="page"></div>
-    <div id="loginPage" class="page"></div>
-    <div id="dashboardPage" class="page"></div>
-    
-    <!-- Container untuk Modal -->
-    <div id="modalContainer"></div>
+    <!-- Container Utama Aplikasi -->
+    <div id="app" class="p-4 md:p-8">
 
+        <!-- ================================== -->
+        <!--        HALAMAN LANDING PAGE        -->
+        <!-- ================================== -->
+        <section id="landingPage" class="flex flex-col items-center justify-center min-h-[80vh] text-center">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <div class="p-3 bg-indigo-600/20 rounded-xl">
+                        <i data-lucide="bar-chart-big" class="w-10 h-10 text-indigo-400"></i>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+                        Mimdi App
+                    </h1>
+                </div>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-4 mb-8">
+                    Solusi terintegrasi untuk mengatur lalu lintas keuangan, melacak orderan, mengelola prospek, dan mengakselerasi pengembangan bisnis Anda.
+                </p>
+                <button id="goToLoginBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 mx-auto">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    Masuk atau Mulai
+                </button>
+            </div>
+        </section>
+
+        <!-- ================================== -->
+        <!--           HALAMAN LOGIN            -->
+        <!-- ================================== -->
+        <section id="loginPage" class="hidden min-h-[80vh] flex items-center justify-center">
+            <div class="w-full max-w-md p-8 space-y-6 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700">
+                <div class="text-center">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                       <div class="p-2 bg-indigo-600/20 rounded-lg">
+                           <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-400"></i>
+                       </div>
+                       <h2 class="text-3xl font-bold text-white">Mimdi App Login</h2>
+                    </div>
+                    <p class="text-gray-400">Selamat datang kembali!</p>
+                </div>
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label for="email" class="text-sm font-medium text-gray-300">Email</label>
+                        <div class="mt-2 relative">
+                            <i data-lucide="mail" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input id="email" name="email" type="email" autocomplete="email" required placeholder="anda@email.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="password" class="text-sm font-medium text-gray-300">Password</label>
+                        <div class="mt-2 relative">
+                            <i data-lucide="lock" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" class="w-full pl-10 pr-3 py-2.5 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
+                            Masuk
+                        </button>
+                    </div>
+                </form>
+                 <button id="backToLandingBtn" class="w-full text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
+                    &larr; Kembali ke Halaman Utama
+                </button>
+            </div>
+        </section>
+
+        <!-- ================================== -->
+        <!--           HALAMAN ADMIN            -->
+        <!-- ================================== -->
+        <section id="adminPage" class="hidden">
+            <!-- Header Admin -->
+            <header class="flex justify-between items-center mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-indigo-600/20 rounded-lg">
+                        <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-400"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white">Dasbor Admin</h1>
+                </div>
+                <button id="logoutBtn" class="flex items-center gap-2 text-sm bg-red-600/20 hover:bg-red-600/40 text-red-400 font-medium py-2 px-4 rounded-lg transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    Logout
+                </button>
+            </header>
+
+            <!-- Konten Utama Admin -->
+            <main>
+                <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6">
+                    <div class="flex justify-between items-center mb-4">
+                         <h2 class="text-xl font-semibold">Daftar Pesanan</h2>
+                         <button id="refreshDataBtn" class="flex items-center gap-2 text-sm bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 font-medium py-2 px-4 rounded-lg transition-colors">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            Muat Ulang Data
+                        </button>
+                    </div>
+                   
+                    <!-- Container untuk tabel data dinamis -->
+                    <div id="tableContainer" class="overflow-x-auto">
+                        <!-- Indikator loading -->
+                        <div id="loadingIndicator" class="text-center p-8">
+                            <p class="flex items-center justify-center gap-2 text-gray-400">
+                                <i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>
+                                Memuat data pesanan...
+                            </p>
+                        </div>
+                        <!-- Tabel akan di-render di sini oleh JavaScript -->
+                    </div>
+                </div>
+            </main>
+        </section>
+
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- KONFIGURASI APLIKASI ---
-            const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw_9rhdUhQ31r_zahAiqjkHpJ1QAjT1TULIeU9GFi4trIQLfDa-rO-myLlTWoxunnHE/exec";
+        // Inisialisasi Lucide Icons
+        lucide.createIcons();
 
-            // --- State Aplikasi ---
-            const state = {
-                user: null,
-                orders: [],
-                headers: []
-            };
+        // --- KONFIGURASI PENTING ---
+        // Ganti URL ini dengan URL Web App dari Google Apps Script Anda setelah di-deploy.
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwg_uVCzQjEBYtwAfn60ZuKbv9pMuLeVqUObSQPciFSGUavwu1IfqpEc-mHIOFsd-tJ/exec';
+        // Ganti dengan ID Google Sheet Anda
+        const SHEET_ID = '1I-qtmM0zq2_Mj_K5It-PyxEpwQalzSFjDbt0ThzqIdI';
+        // Ganti dengan nama Sheet yang berisi pesanan
+        const SHEET_NAME = 'Pesanan';
 
-            // --- DEFINISI IKON (SVG Strings) ---
-            const ICONS = {
-                FilePlus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>`,
-                LayoutDashboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>`,
-                LogOut: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>`,
-                ArrowRight: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`,
-                LoaderCircle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`,
-                AlertTriangle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,
-                X: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
-                AppIcon: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor" /><path d="M9 7C9 6.44772 9.44772 6 10 6H14C14.5523 6 15 6.44772 15 7C15 7.55228 14.5523 8 14 8H10C9.44772 8 9 7.55228 9 7Z" fill="currentColor" /><path d="M9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z" fill="currentColor" /><path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z" fill="currentColor" /></svg>`
-            };
-            
-            // --- ELEMEN DOM ---
-            const landingPage = document.getElementById('landingPage');
-            const loginPage = document.getElementById('loginPage');
-            const dashboardPage = document.getElementById('dashboardPage');
-            const modalContainer = document.getElementById('modalContainer');
-            
-            // --- FUNGSI RENDER & NAVIGASI ---
-            const navigate = (page) => {
-                landingPage.style.display = 'none';
-                loginPage.style.display = 'none';
-                dashboardPage.style.display = 'none';
-                
-                document.getElementById(`${page}Page`).style.display = 'block';
-            };
 
-            const renderLandingPage = () => {
-                landingPage.innerHTML = `
-                    <div class="flex flex-col items-center justify-center min-h-screen p-8 text-center">
-                        <div class="mb-6 text-indigo-400">${ICONS.AppIcon}</div>
-                        <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">
-                            Selamat Datang di Mimdi App
-                        </h1>
-                        <p class="text-lg md:text-xl text-gray-300 max-w-2xl mb-8">
-                            Solusi terpadu untuk mengelola arus keuangan, pesanan, prospek, dan strategi pengembangan bisnis Anda secara efisien.
-                        </p>
-                        <button id="goToLoginBtn" class="flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white font-semibold rounded-full shadow-lg hover:bg-indigo-700 transition-transform transform hover:scale-105 duration-300 ease-in-out">
-                            Mulai Sekarang <span class="w-5 h-5">${ICONS.ArrowRight}</span>
-                        </button>
-                    </div>`;
-                document.getElementById('goToLoginBtn').addEventListener('click', () => navigate('login'));
-            };
+        // --- SELEKSI ELEMEN DOM ---
+        const landingPage = document.getElementById('landingPage');
+        const loginPage = document.getElementById('loginPage');
+        const adminPage = document.getElementById('adminPage');
 
-            const renderLoginPage = () => {
-                loginPage.innerHTML = `
-                    <div class="flex items-center justify-center min-h-screen p-4">
-                        <div class="w-full max-w-md bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-gray-700">
-                            <div class="flex justify-center mb-6 text-indigo-400">${ICONS.AppIcon}</div>
-                            <h2 class="text-3xl font-bold text-center mb-2">Login ke Mimdi</h2>
-                            <p class="text-center text-gray-400 mb-8">Masukkan kredensial Anda.</p>
-                            <div id="loginErrorContainer"></div>
-                            <form id="loginForm" class="space-y-6">
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                                    <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="anda@email.com" required />
-                                </div>
-                                <div>
-                                    <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
-                                    <input type="password" id="password" name="password" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all" placeholder="••••••••" required />
-                                </div>
-                                <button type="submit" id="loginSubmitBtn" class="w-full flex justify-center items-center gap-2 py-3 px-4 bg-indigo-600 font-semibold rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-indigo-400 disabled:cursor-not-allowed transition-colors duration-300">
-                                    Login
-                                </button>
-                            </form>
-                        </div>
-                    </div>`;
-                document.getElementById('loginForm').addEventListener('submit', handleLogin);
-            };
+        const goToLoginBtn = document.getElementById('goToLoginBtn');
+        const backToLandingBtn = document.getElementById('backToLandingBtn');
+        const loginForm = document.getElementById('loginForm');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const refreshDataBtn = document.getElementById('refreshDataBtn');
 
-            const renderDashboard = async () => {
-                dashboardPage.innerHTML = `
-                    <div class="p-4 md:p-8">
-                        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-                            <div>
-                                <h1 class="text-3xl font-bold">Dashboard Admin</h1>
-                                <p class="text-gray-400">Selamat datang, ${state.user?.name || 'Pengguna'}.</p>
-                            </div>
-                            <div class="flex items-center gap-4 mt-4 md:mt-0">
-                                <button id="addOrderBtn" class="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-colors">
-                                    <span class="w-5 h-5">${ICONS.FilePlus}</span> Tambah Pesanan
-                                </button>
-                                <button id="logoutBtn" class="p-2 rounded-full hover:bg-gray-700 transition-colors">
-                                    <span class="w-5 h-5">${ICONS.LogOut}</span>
-                                </button>
-                            </div>
-                        </header>
-                        <main id="dashboardContent" class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl shadow-2xl border border-gray-700">
-                            <div class="flex justify-center items-center py-20"><span class="w-12 h-12 text-indigo-400">${ICONS.LoaderCircle}</span></div>
-                        </main>
-                    </div>`;
-                
-                document.getElementById('addOrderBtn').addEventListener('click', renderAddOrderModal);
-                document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+        const tableContainer = document.getElementById('tableContainer');
+        const loadingIndicator = document.getElementById('loadingIndicator');
 
-                await fetchDashboardData();
-            };
-            
-            // --- FUNGSI LOGIKA & EVENT HANDLER ---
-            const handleLogin = async (e) => {
-                e.preventDefault();
-                const submitBtn = document.getElementById('loginSubmitBtn');
-                const email = e.target.email.value;
-                const password = e.target.password.value;
+        // --- FUNGSI NAVIGASI ---
+        function showPage(page) {
+            landingPage.classList.add('hidden');
+            loginPage.classList.add('hidden');
+            adminPage.classList.add('hidden');
+            page.classList.remove('hidden');
+        }
 
-                setLoading(submitBtn, true, 'Login');
-                
-                if (GAS_WEB_APP_URL === "URL_WEB_APP_GAS_ANDA_DISINI") {
-                    showAlert('loginErrorContainer', "Harap konfigurasi URL Web App GAS terlebih dahulu.");
-                    setLoading(submitBtn, false, 'Login');
-                    return;
-                }
+        // --- EVENT LISTENERS ---
+        goToLoginBtn.addEventListener('click', () => showPage(loginPage));
+        backToLandingBtn.addEventListener('click', () => showPage(landingPage));
 
-                try {
-                    // Karena GAS dengan 'no-cors' tidak mengembalikan body, kita asumsikan berhasil jika tidak ada error
-                    // dan lanjut setelah delay singkat untuk simulasi.
-                    await fetch(GAS_WEB_APP_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            action: 'doLogin',
-                            payload: { email, password }
-                        })
-                    });
-                    
-                    // Simulasi sukses
-                    setTimeout(() => {
-                        state.user = { name: "Admin Mimdi", email: email };
-                        navigate('dashboard');
-                        renderDashboard();
-                    }, 1000);
-
-                } catch (err) {
-                    showAlert('loginErrorContainer', 'Terjadi masalah koneksi. Coba lagi.');
-                    setLoading(submitBtn, false, 'Login');
-                }
-            };
-            
-            const handleLogout = () => {
-                state.user = null;
-                navigate('login');
-            };
-
-            const fetchDashboardData = async () => {
-                const contentEl = document.getElementById('dashboardContent');
-                try {
-                    const [headersRes, ordersRes] = await Promise.all([
-                        fetch(`${GAS_WEB_APP_URL}?action=getHeaders`),
-                        fetch(`${GAS_WEB_APP_URL}?action=getOrders`)
-                    ]);
-
-                    if (!headersRes.ok || !ordersRes.ok) throw new Error('Gagal mengambil data dari server.');
-                    
-                    const headersData = await headersRes.json();
-                    const ordersData = await ordersRes.json();
-                    
-                    state.headers = headersData;
-                    state.orders = ordersData.data;
-
-                    let tableHTML = `<div class="overflow-x-auto"><table class="w-full text-left"><thead><tr class="border-b border-gray-600">`;
-                    state.headers.forEach(h => tableHTML += `<th class="p-4 text-sm font-semibold uppercase text-gray-400">${h}</th>`);
-                    tableHTML += `</tr></thead><tbody>`;
-
-                    if (state.orders.length > 0) {
-                        state.orders.forEach(order => {
-                            tableHTML += `<tr class="border-b border-gray-700 hover:bg-gray-700/50 transition-colors">`;
-                            state.headers.forEach(header => tableHTML += `<td class="p-4 whitespace-nowrap">${order[header] || ''}</td>`);
-                            tableHTML += `</tr>`;
-                        });
-                    } else {
-                        tableHTML += `<tr><td colspan="${state.headers.length}" class="text-center p-8 text-gray-400">Belum ada data pesanan.</td></tr>`;
-                    }
-                    
-                    tableHTML += `</tbody></table></div>`;
-                    contentEl.innerHTML = tableHTML;
-
-                } catch (err) {
-                    contentEl.innerHTML = '';
-                    showAlert('dashboardContent', `Gagal memuat data: ${err.message}`, 'error', true);
-                }
-            };
-
-            const renderAddOrderModal = () => {
-                const formHeaders = state.headers.filter(h => h.toLowerCase() !== 'idorder');
-                let formFieldsHTML = '';
-                formHeaders.forEach(header => {
-                    formFieldsHTML += `
-                        <div>
-                            <label for="${header}" class="block text-sm font-medium text-gray-300 mb-2">${header}</label>
-                            <input type="text" id="${header}" name="${header}" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-                        </div>`;
-                });
-
-                modalContainer.innerHTML = `
-                    <div id="addOrderModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                        <div class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-lg border border-gray-700">
-                            <div class="flex justify-between items-center p-6 border-b border-gray-700">
-                                <h3 class="text-xl font-bold">Tambah Pesanan Baru</h3>
-                                <button id="closeModalBtn" class="p-1 rounded-full hover:bg-gray-700"><span class="w-5 h-5 block">${ICONS.X}</span></button>
-                            </div>
-                            <form id="addOrderForm" class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
-                                <div id="modalErrorContainer"></div>
-                                ${formFieldsHTML}
-                                <div class="flex justify-end gap-4 pt-4">
-                                    <button type="button" id="cancelModalBtn" class="px-6 py-2 rounded-lg bg-gray-600 hover:bg-gray-500 transition-colors">Batal</button>
-                                    <button type="submit" id="saveOrderBtn" class="px-6 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 transition-colors flex items-center gap-2">Simpan</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>`;
-
-                document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-                document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
-                document.getElementById('addOrderForm').addEventListener('submit', handleAddOrder);
-            };
-
-            const handleAddOrder = async (e) => {
-                e.preventDefault();
-                const submitBtn = document.getElementById('saveOrderBtn');
-                setLoading(submitBtn, true, 'Simpan');
-
-                const formData = new FormData(e.target);
-                const orderData = Object.fromEntries(formData.entries());
-
-                try {
-                     await fetch(GAS_WEB_APP_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            action: 'addOrder',
-                            payload: orderData
-                        })
-                    });
-                    
-                    closeModal();
-                    await fetchDashboardData(); // Refresh data
-
-                } catch (err) {
-                    showAlert('modalErrorContainer', 'Gagal menambahkan pesanan. Periksa koneksi Anda.');
-                    setLoading(submitBtn, false, 'Simpan');
-                }
-            };
-            
-            const closeModal = () => {
-                modalContainer.innerHTML = '';
-            };
-
-            // --- FUNGSI UTILITAS ---
-            const setLoading = (button, isLoading, defaultText = '') => {
-                if (isLoading) {
-                    button.disabled = true;
-                    button.innerHTML = `<span class="w-5 h-5">${ICONS.LoaderCircle}</span>`;
-                } else {
-                    button.disabled = false;
-                    button.innerHTML = defaultText;
-                }
-            };
-            
-            const showAlert = (containerId, message, type = 'error', prepend = false) => {
-                const container = document.getElementById(containerId);
-                const colors = {
-                    error: 'bg-red-500/10 border-red-500 text-red-300',
-                    success: 'bg-green-500/10 border-green-500 text-green-300',
-                };
-                const alertHTML = `
-                    <div class="flex items-center justify-between p-4 mb-4 rounded-lg border ${colors[type]}">
-                        <div class="flex items-center gap-3"><span class="w-5 h-5">${ICONS.AlertTriangle}</span><p class="text-sm">${message}</p></div>
-                        <button onclick="this.parentElement.remove()" class="p-1 rounded-full hover:bg-white/10"><span class="w-4 h-4 block">${ICONS.X}</span></button>
-                    </div>`;
-
-                if (prepend) {
-                    container.insertAdjacentHTML('afterbegin', alertHTML);
-                } else {
-                    container.innerHTML = alertHTML;
-                }
-            };
-
-            // --- INISIALISASI APLIKASI ---
-            const init = () => {
-                renderLandingPage();
-                renderLoginPage();
-                // Tampilkan halaman landing sebagai default
-                navigate('landing');
-            };
-
-            init();
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Di sini Anda bisa menambahkan logika otentikasi.
+            // Untuk sekarang, kita langsung masuk ke halaman admin.
+            console.log('Login berhasil (simulasi).');
+            showPage(adminPage);
+            fetchOrders();
         });
+
+        logoutBtn.addEventListener('click', () => {
+            // Di sini Anda bisa menambahkan logika logout.
+            console.log('Logout berhasil.');
+            showPage(landingPage);
+            tableContainer.innerHTML = ''; // Kosongkan tabel saat logout
+        });
+        
+        refreshDataBtn.addEventListener('click', () => {
+             fetchOrders();
+        });
+
+
+        // --- FUNGSI PENGAMBILAN DATA (FETCH) DARI GOOGLE APPS SCRIPT ---
+        async function fetchOrders() {
+            // Tampilkan loading indicator
+            tableContainer.innerHTML = '';
+            loadingIndicator.classList.remove('hidden');
+
+            // URL dengan parameter untuk GAS
+            const url = `${GAS_WEB_APP_URL}?sheetId=${SHEET_ID}&sheetName=${SHEET_NAME}`;
+            
+            try {
+                // PENTING: Jika URL GAS Anda belum diganti, fetch akan gagal.
+                // Kode ini untuk simulasi jika URL belum di-setting.
+                if (GAS_WEB_APP_URL.includes('YOUR_DEPLOYMENT_ID')) {
+                     throw new Error("URL Google Apps Script belum diatur. Silakan ganti 'YOUR_DEPLOYMENT_ID' di dalam kode JavaScript.");
+                }
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+
+                if (result.success && result.data.length > 0) {
+                    renderTable(result.data);
+                } else if (result.success && result.data.length === 0) {
+                    displayMessage('Tidak ada data pesanan yang ditemukan.');
+                } else {
+                    throw new Error(result.error || 'Gagal mengambil data.');
+                }
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                // Menampilkan data dummy jika terjadi error (untuk tujuan demo)
+                displayMessage(`Error: ${error.message}<br><br>Menampilkan data contoh untuk demonstrasi.`);
+                renderTable(getDummyData());
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+        
+        // --- FUNGSI UNTUK MERENDER TABEL ---
+        function renderTable(data) {
+            if (!data || data.length === 0) return;
+
+            // Dapatkan header dari kunci (key) objek pertama
+            const headers = Object.keys(data[0]);
+
+            // Buat elemen tabel
+            const table = document.createElement('table');
+            table.className = 'w-full text-sm text-left text-gray-300';
+
+            // Buat header tabel
+            const thead = document.createElement('thead');
+            thead.className = 'text-xs text-gray-400 uppercase bg-gray-700/50';
+            const headerRow = document.createElement('tr');
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.scope = 'col';
+                th.className = 'px-6 py-3';
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Buat body tabel
+            const tbody = document.createElement('tbody');
+            data.forEach(rowData => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-700 hover:bg-gray-700/40 transition-colors';
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    td.className = 'px-6 py-4';
+                    td.textContent = rowData[header];
+                    row.appendChild(td);
+                });
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+            
+            // Masukkan tabel ke dalam container
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(table);
+        }
+        
+        // --- FUNGSI BANTUAN ---
+        function displayMessage(message) {
+            tableContainer.innerHTML = `<div class="text-center text-gray-400 p-8 bg-gray-800 rounded-lg">${message}</div>`;
+        }
+        
+        function getDummyData() {
+            // Data ini hanya muncul jika pengambilan data dari Google Sheet gagal.
+            return [
+                { "IDOrder": "ORD-001", "Nama": "Budi Santoso", "Jenis": "Produk A", "Jumlah": 2, "Satuan": "pcs", "Total": 250000, "Catatan": "Kirim segera" },
+                { "IDOrder": "ORD-002", "Nama": "Citra Lestari", "Jenis": "Layanan B", "Jumlah": 1, "Satuan": "sesi", "Total": 500000, "Catatan": "Jadwal fleksibel" },
+                { "IDOrder": "ORD-003", "Nama": "Doni Firmansyah", "Jenis": "Produk C", "Jumlah": 5, "Satuan": "box", "Total": 750000, "Catatan": "Packing kayu" }
+            ];
+        }
+
+        // --- Inisialisasi Aplikasi ---
+        showPage(landingPage);
+
     </script>
 </body>
 </html>
-
