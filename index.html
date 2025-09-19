@@ -28,18 +28,21 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #111827;
+            background: #e2e8f0; /* light gray track */
         }
         ::-webkit-scrollbar-thumb {
-            background: #4f46e5;
+            background: #4f46e5; /* indigo thumb */
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #6366f1;
+            background: #6366f1; /* lighter indigo on hover */
+        }
+        .modal-backdrop {
+            background-color: rgba(0,0,0,0.5);
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200 bg-gradient-to-br from-gray-900 via-black to-gray-800 min-h-screen">
+<body class="bg-gray-50 text-gray-800 min-h-screen">
 
     <!-- Container Utama Aplikasi -->
     <div id="app" class="p-4 md:p-8">
@@ -50,17 +53,17 @@
         <section id="landingPage" class="flex flex-col items-center justify-center min-h-[80vh] text-center">
             <div class="max-w-3xl mx-auto">
                 <div class="flex items-center justify-center gap-4 mb-6">
-                    <div class="p-3 bg-indigo-600/20 rounded-xl">
-                        <i data-lucide="bar-chart-big" class="w-10 h-10 text-indigo-400"></i>
+                    <div class="p-3 bg-indigo-100 rounded-xl">
+                        <i data-lucide="bar-chart-big" class="w-10 h-10 text-indigo-600"></i>
                     </div>
-                    <h1 class="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+                    <h1 class="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                         Mimdi App
                     </h1>
                 </div>
-                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-4 mb-8">
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mt-4 mb-8">
                     Solusi terintegrasi untuk mengatur lalu lintas keuangan, melacak orderan, mengelola prospek, dan mengakselerasi pengembangan bisnis Anda.
                 </p>
-                <button id="goToLoginBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg shadow-indigo-600/20 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 mx-auto">
+                <button id="goToLoginBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg shadow-indigo-500/20 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 mx-auto">
                     <i data-lucide="log-in" class="w-5 h-5"></i>
                     Masuk atau Mulai
                 </button>
@@ -71,38 +74,38 @@
         <!--           HALAMAN LOGIN            -->
         <!-- ================================== -->
         <section id="loginPage" class="hidden min-h-[80vh] flex items-center justify-center">
-            <div class="w-full max-w-md p-8 space-y-6 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700">
+            <div class="w-full max-w-md p-8 space-y-6 bg-white/70 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-200">
                 <div class="text-center">
                     <div class="flex items-center justify-center gap-3 mb-4">
-                       <div class="p-2 bg-indigo-600/20 rounded-lg">
-                           <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-400"></i>
+                       <div class="p-2 bg-indigo-100 rounded-lg">
+                           <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-600"></i>
                        </div>
-                       <h2 class="text-3xl font-bold text-white">Mimdi App Login</h2>
+                       <h2 class="text-3xl font-bold text-gray-900">Mimdi App Login</h2>
                     </div>
-                    <p class="text-gray-400">Selamat datang kembali!</p>
+                    <p class="text-gray-500">Selamat datang kembali!</p>
                 </div>
                 <form id="loginForm" class="space-y-6">
                     <div>
-                        <label for="email" class="text-sm font-medium text-gray-300">Email</label>
+                        <label for="email" class="text-sm font-medium text-gray-700">Email</label>
                         <div class="mt-2 relative">
                             <i data-lucide="mail" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input id="email" name="email" type="email" autocomplete="email" required placeholder="anda@email.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <input id="email" name="email" type="email" autocomplete="email" required placeholder="anda@email.com" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
                     </div>
                     <div>
-                        <label for="password" class="text-sm font-medium text-gray-300">Password</label>
+                        <label for="password" class="text-sm font-medium text-gray-700">Password</label>
                         <div class="mt-2 relative">
                             <i data-lucide="lock" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" class="w-full pl-10 pr-3 py-2.5 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
                             Masuk
                         </button>
                     </div>
                 </form>
-                 <button id="backToLandingBtn" class="w-full text-sm text-indigo-400 hover:text-indigo-300 transition-colors">
+                 <button id="backToLandingBtn" class="w-full text-sm text-indigo-600 hover:text-indigo-500 transition-colors">
                     &larr; Kembali ke Halaman Utama
                 </button>
             </div>
@@ -113,14 +116,14 @@
         <!-- ================================== -->
         <section id="adminPage" class="hidden">
             <!-- Header Admin -->
-            <header class="flex justify-between items-center mb-8">
+            <header class="flex flex-wrap justify-between items-center gap-4 mb-8">
                 <div class="flex items-center gap-3">
-                    <div class="p-2 bg-indigo-600/20 rounded-lg">
-                        <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-400"></i>
+                    <div class="p-2 bg-indigo-100 rounded-lg">
+                        <i data-lucide="bar-chart-big" class="w-6 h-6 text-indigo-600"></i>
                     </div>
-                    <h1 class="text-2xl font-bold text-white">Dasbor Admin</h1>
+                    <h1 class="text-2xl font-bold text-gray-900">Dasbor Admin</h1>
                 </div>
-                <button id="logoutBtn" class="flex items-center gap-2 text-sm bg-red-600/20 hover:bg-red-600/40 text-red-400 font-medium py-2 px-4 rounded-lg transition-colors">
+                <button id="logoutBtn" class="flex items-center gap-2 text-sm bg-red-100 hover:bg-red-200 text-red-600 font-medium py-2 px-4 rounded-lg transition-colors">
                     <i data-lucide="log-out" class="w-4 h-4"></i>
                     Logout
                 </button>
@@ -128,194 +131,125 @@
 
             <!-- Konten Utama Admin -->
             <main>
-                <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6">
-                    <div class="flex justify-between items-center mb-4">
-                         <h2 class="text-xl font-semibold">Daftar Pesanan</h2>
-                         <button id="refreshDataBtn" class="flex items-center gap-2 text-sm bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-400 font-medium py-2 px-4 rounded-lg transition-colors">
-                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                            Muat Ulang Data
-                        </button>
+                <div class="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-4 md:p-6 shadow-lg">
+                    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+                        <div class="flex-grow">
+                             <h2 class="text-xl font-semibold text-gray-900">Daftar Pesanan</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="refreshDataBtn" class="flex items-center gap-2 text-sm bg-indigo-100 hover:bg-indigo-200 text-indigo-600 font-medium py-2 px-4 rounded-lg transition-colors">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Muat Ulang</span>
+                            </button>
+                             <button id="addOrderBtn" class="flex items-center gap-2 text-sm bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors shadow-md shadow-indigo-500/20">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline">Tambah</span>
+                            </button>
+                        </div>
                     </div>
                    
                     <!-- Container untuk tabel data dinamis -->
-                    <div id="tableContainer" class="overflow-x-auto">
+                    <div id="dataContainer">
                         <!-- Indikator loading -->
                         <div id="loadingIndicator" class="text-center p-8">
-                            <p class="flex items-center justify-center gap-2 text-gray-400">
+                            <p class="flex items-center justify-center gap-2 text-gray-500">
                                 <i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>
                                 Memuat data pesanan...
                             </p>
                         </div>
-                        <!-- Tabel akan di-render di sini oleh JavaScript -->
+                        <!-- Data (kartu/tabel) akan di-render di sini oleh JavaScript -->
                     </div>
                 </div>
             </main>
         </section>
 
     </div>
+    
+    <!-- ================================== -->
+    <!--         MODAL UNTUK CRUD           -->
+    <!-- ================================== -->
+    <div id="crudModal" class="fixed inset-0 z-50 items-center justify-center hidden p-4 modal-backdrop">
+        <div class="relative w-full max-w-2xl mx-auto mt-10">
+            <div class="relative bg-white rounded-lg shadow-xl">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t">
+                    <h3 id="modalTitle" class="text-xl font-semibold text-gray-900">
+                        <!-- Judul akan diisi oleh JS -->
+                    </h3>
+                    <button type="button" id="closeModalBtn" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6">
+                    <form id="crudForm" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <input type="hidden" id="originalIDOrder" name="originalIDOrder">
+                        <div>
+                            <label for="IDOrder" class="block mb-2 text-sm font-medium text-gray-700">IDOrder</label>
+                            <input type="text" name="IDOrder" id="IDOrder" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="ORD-001" required>
+                        </div>
+                        <div>
+                            <label for="Nama" class="block mb-2 text-sm font-medium text-gray-700">Nama</label>
+                            <input type="text" name="Nama" id="Nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Nama Pelanggan" required>
+                        </div>
+                        <div>
+                            <label for="Jenis" class="block mb-2 text-sm font-medium text-gray-700">Jenis</label>
+                            <input type="text" name="Jenis" id="Jenis" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Produk/Layanan">
+                        </div>
+                        <div>
+                            <label for="Jumlah" class="block mb-2 text-sm font-medium text-gray-700">Jumlah</label>
+                            <input type="number" name="Jumlah" id="Jumlah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="0">
+                        </div>
+                         <div>
+                            <label for="Satuan" class="block mb-2 text-sm font-medium text-gray-700">Satuan</label>
+                            <input type="text" name="Satuan" id="Satuan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="pcs, kg, box">
+                        </div>
+                         <div>
+                            <label for="Total" class="block mb-2 text-sm font-medium text-gray-700">Total</label>
+                            <input type="number" name="Total" id="Total" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="250000">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="Catatan" class="block mb-2 text-sm font-medium text-gray-700">Catatan</label>
+                            <textarea id="Catatan" name="Catatan" rows="3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" placeholder="Catatan tambahan..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                    <button id="formSubmitBtn" type="submit" form="crudForm" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        <!-- Teks Tombol oleh JS -->
+                    </button>
+                    <button id="cancelModalBtn" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ================================== -->
+    <!--     MODAL KONFIRMASI HAPUS         -->
+    <!-- ================================== -->
+    <div id="deleteConfirmModal" class="fixed inset-0 z-50 items-center justify-center hidden p-4 modal-backdrop">
+        <div class="relative w-full max-w-md mx-auto mt-20">
+            <div class="relative bg-white rounded-lg shadow-xl">
+                <button id="closeDeleteModalBtn" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-6 text-center">
+                    <i data-lucide="alert-circle" class="mx-auto mb-4 text-red-500 w-14 h-14"></i>
+                    <h3 class="mb-5 text-lg font-normal text-gray-600">Apakah Anda yakin ingin menghapus data ini?</h3>
+                    <button id="confirmDeleteBtn" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                        Ya, saya yakin
+                    </button>
+                    <button id="cancelDeleteBtn" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Tidak, batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        // Inisialisasi Lucide Icons
-        lucide.createIcons();
-
-        // --- KONFIGURASI PENTING ---
-        // Ganti URL ini dengan URL Web App dari Google Apps Script Anda setelah di-deploy.
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwg_uVCzQjEBYtwAfn60ZuKbv9pMuLeVqUObSQPciFSGUavwu1IfqpEc-mHIOFsd-tJ/exec';
-        // Ganti dengan ID Google Sheet Anda
-        const SHEET_ID = '1I-qtmM0zq2_Mj_K5It-PyxEpwQalzSFjDbt0ThzqIdI';
-        // Ganti dengan nama Sheet yang berisi pesanan
-        const SHEET_NAME = 'Pesanan';
-
-
-        // --- SELEKSI ELEMEN DOM ---
-        const landingPage = document.getElementById('landingPage');
-        const loginPage = document.getElementById('loginPage');
-        const adminPage = document.getElementById('adminPage');
-
-        const goToLoginBtn = document.getElementById('goToLoginBtn');
-        const backToLandingBtn = document.getElementById('backToLandingBtn');
-        const loginForm = document.getElementById('loginForm');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const refreshDataBtn = document.getElementById('refreshDataBtn');
-
-        const tableContainer = document.getElementById('tableContainer');
-        const loadingIndicator = document.getElementById('loadingIndicator');
-
-        // --- FUNGSI NAVIGASI ---
-        function showPage(page) {
-            landingPage.classList.add('hidden');
-            loginPage.classList.add('hidden');
-            adminPage.classList.add('hidden');
-            page.classList.remove('hidden');
-        }
-
-        // --- EVENT LISTENERS ---
-        goToLoginBtn.addEventListener('click', () => showPage(loginPage));
-        backToLandingBtn.addEventListener('click', () => showPage(landingPage));
-
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Di sini Anda bisa menambahkan logika otentikasi.
-            // Untuk sekarang, kita langsung masuk ke halaman admin.
-            console.log('Login berhasil (simulasi).');
-            showPage(adminPage);
-            fetchOrders();
-        });
-
-        logoutBtn.addEventListener('click', () => {
-            // Di sini Anda bisa menambahkan logika logout.
-            console.log('Logout berhasil.');
-            showPage(landingPage);
-            tableContainer.innerHTML = ''; // Kosongkan tabel saat logout
-        });
-        
-        refreshDataBtn.addEventListener('click', () => {
-             fetchOrders();
-        });
-
-
-        // --- FUNGSI PENGAMBILAN DATA (FETCH) DARI GOOGLE APPS SCRIPT ---
-        async function fetchOrders() {
-            // Tampilkan loading indicator
-            tableContainer.innerHTML = '';
-            loadingIndicator.classList.remove('hidden');
-
-            // URL dengan parameter untuk GAS
-            const url = `${GAS_WEB_APP_URL}?sheetId=${SHEET_ID}&sheetName=${SHEET_NAME}`;
-            
-            try {
-                // PENTING: Jika URL GAS Anda belum diganti, fetch akan gagal.
-                // Kode ini untuk simulasi jika URL belum di-setting.
-                if (GAS_WEB_APP_URL.includes('YOUR_DEPLOYMENT_ID')) {
-                     throw new Error("URL Google Apps Script belum diatur. Silakan ganti 'YOUR_DEPLOYMENT_ID' di dalam kode JavaScript.");
-                }
-                
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const result = await response.json();
-
-                if (result.success && result.data.length > 0) {
-                    renderTable(result.data);
-                } else if (result.success && result.data.length === 0) {
-                    displayMessage('Tidak ada data pesanan yang ditemukan.');
-                } else {
-                    throw new Error(result.error || 'Gagal mengambil data.');
-                }
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                // Menampilkan data dummy jika terjadi error (untuk tujuan demo)
-                displayMessage(`Error: ${error.message}<br><br>Menampilkan data contoh untuk demonstrasi.`);
-                renderTable(getDummyData());
-            } finally {
-                loadingIndicator.classList.add('hidden');
-            }
-        }
-        
-        // --- FUNGSI UNTUK MERENDER TABEL ---
-        function renderTable(data) {
-            if (!data || data.length === 0) return;
-
-            // Dapatkan header dari kunci (key) objek pertama
-            const headers = Object.keys(data[0]);
-
-            // Buat elemen tabel
-            const table = document.createElement('table');
-            table.className = 'w-full text-sm text-left text-gray-300';
-
-            // Buat header tabel
-            const thead = document.createElement('thead');
-            thead.className = 'text-xs text-gray-400 uppercase bg-gray-700/50';
-            const headerRow = document.createElement('tr');
-            headers.forEach(headerText => {
-                const th = document.createElement('th');
-                th.scope = 'col';
-                th.className = 'px-6 py-3';
-                th.textContent = headerText;
-                headerRow.appendChild(th);
-            });
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-
-            // Buat body tabel
-            const tbody = document.createElement('tbody');
-            data.forEach(rowData => {
-                const row = document.createElement('tr');
-                row.className = 'border-b border-gray-700 hover:bg-gray-700/40 transition-colors';
-                headers.forEach(header => {
-                    const td = document.createElement('td');
-                    td.className = 'px-6 py-4';
-                    td.textContent = rowData[header];
-                    row.appendChild(td);
-                });
-                tbody.appendChild(row);
-            });
-            table.appendChild(tbody);
-            
-            // Masukkan tabel ke dalam container
-            tableContainer.innerHTML = '';
-            tableContainer.appendChild(table);
-        }
-        
-        // --- FUNGSI BANTUAN ---
-        function displayMessage(message) {
-            tableContainer.innerHTML = `<div class="text-center text-gray-400 p-8 bg-gray-800 rounded-lg">${message}</div>`;
-        }
-        
-        function getDummyData() {
-            // Data ini hanya muncul jika pengambilan data dari Google Sheet gagal.
-            return [
-                { "IDOrder": "ORD-001", "Nama": "Budi Santoso", "Jenis": "Produk A", "Jumlah": 2, "Satuan": "pcs", "Total": 250000, "Catatan": "Kirim segera" },
-                { "IDOrder": "ORD-002", "Nama": "Citra Lestari", "Jenis": "Layanan B", "Jumlah": 1, "Satuan": "sesi", "Total": 500000, "Catatan": "Jadwal fleksibel" },
-                { "IDOrder": "ORD-003", "Nama": "Doni Firmansyah", "Jenis": "Produk C", "Jumlah": 5, "Satuan": "box", "Total": 750000, "Catatan": "Packing kayu" }
-            ];
-        }
-
-        // --- Inisialisasi Aplikasi ---
-        showPage(landingPage);
-
-    </script>
+    <!-- PENTING: Hubungkan file JavaScript eksternal -->
+    <script src="script.js" defer></script>
 </body>
 </html>
+
