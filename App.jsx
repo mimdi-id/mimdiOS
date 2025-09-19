@@ -3,7 +3,7 @@ import { FilePlus, LayoutDashboard, LogOut, ArrowRight, LoaderCircle, AlertTrian
 
 // --- KONFIGURASI APLIKASI ---
 // PENTING: Ganti URL ini dengan URL Web App dari Google Apps Script Anda setelah di-deploy.
-const GAS_WEB_APP_URL = "URL_WEB_APP_GAS_ANDA_DISINI";
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyxuubjnA6F3gBHrXD83N7RFc2PJPE5w54z5DKRyFw0QCsLBnyFpk2C0IitTB90SeD9/exec";
 
 // Komponen Ikon Aplikasi
 const AppIcon = () => (
